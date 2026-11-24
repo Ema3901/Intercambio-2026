@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intercambio Navideño - Registro</title>
+  <meta name="description" content="Regístrate en el intercambio de regalos navideño.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23b3202a' d='M20 7h-2.18A3 3 0 0 0 12 3.76 3 3 0 0 0 6.18 7H4a2 2 0 0 0-2 2v2a1 1 0 0 0 1 1h8V9h2v3h8a1 1 0 0 0 1-1V9a2 2 0 0 0-2-2ZM9 7a1 1 0 1 1 1-1v1Zm5 0V6a1 1 0 1 1 1 1ZM3 14v5a2 2 0 0 0 2 2h6v-7Zm10 7h6a2 2 0 0 0 2-2v-5h-8Z'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <canvas id="nieve" aria-hidden="true"></canvas>
+  <div class="luces" aria-hidden="true"></div>
+
+  <main class="contenedor">
+    <header class="encabezado">
+      <span class="material-symbols-rounded icono-grande">redeem</span>
+      <h1 id="titulo-evento">Intercambio Navideño</h1>
+      <p>Escribe tu carta a Santa para que tu amigo secreto acierte con tu regalo</p>
+    </header>
+
+    <div class="info-evento" id="info-evento"></div>
+
+    <!-- Cargando -->
+    <section class="tarjeta" id="vista-cargando">
+      <div class="vacio">
+        <span class="material-symbols-rounded girar">progress_activity</span>
+        <p>Preparando el taller de Santa...</p>
+      </div>
+    </section>
+
+    <!-- Registro cerrado -->
+    <section class="tarjeta oculto" id="vista-cerrado">
+      <div class="exito">
+        <span class="material-symbols-rounded grande" style="color:var(--rojo)">lock_clock</span>
+        <h2>El registro está cerrado</h2>
+        <p class="subtitulo">El sorteo ya se realizó o el organizador cerro las inscripciones. Si ya te registraste, revisa tu correo (y la carpeta de spam).</p>
+      </div>
+    </section>
+
+    <!-- Formulario -->
+    <section class="tarjeta oculto" id="vista-formulario">
+      <h2><span class="material-symbols-rounded">edit_note</span>Mi carta a Santa</h2>
+      <p class="subtitulo">Cuando el organizador haga el sorteo, recibirás por correo el nombre de la persona a la que le regalaras, junto con su carta. Si te equivocas, puedes volver a enviar el formulario con el mismo correo y se actualizara.</p>
+
+      <div id="mensaje" class="aviso oculto" role="alert"></div>
+
+      <form id="formulario" novalidate>
+        <div class="separador">Tus datos</div>
+        <div class="grid">
+          <div class="campo">
+            <label for="nombre"><span class="material-symbols-rounded">person</span>Nombre <span class="req">*</span></label>
+            <input type="text" id="nombre" name="nombre" maxlength="80" required placeholder="Cómo te conocen en el grupo" autocomplete="name">
+          </div>
+          <div class="campo">
+            <label for="correo"><span class="material-symbols-rounded">mail</span>Correo <span class="req">*</span></label>
+            <input type="email" id="correo" name="correo" maxlength="120" required placeholder="tu@correo.com" autocomplete="email">
+            <div class="ayuda">Aquí te llegará tu amigo secreto.</div>
+          </div>
+        </div>
+
+        <div class="separador">Tus deseos</div>
+        <div class="grid">
+          <div class="campo completo">
+            <label for="gustos"><span class="material-symbols-rounded">favorite</span>Cosas que me gustaria recibir <span class="req">*</span></label>
+            <textarea id="gustos" name="gustos" maxlength="1000" required placeholder="Ej. libros de fantasía, café de especialidad, algo para mi escritorio..."></textarea>
+          </div>
+          <div class="campo completo">
+            <label for="noGustos"><span class="material-symbols-rounded">block</span>Cosas que NO me gustaria recibir</label>
+            <textarea id="noGustos" name="noGustos" maxlength="1000" placeholder="Ej. perfumes, chocolate (soy alérgico), tazas..."></textarea>
+          </div>
+          <div class="campo">
+            <label for="talla"><span class="material-symbols-rounded">apparel</span>Tallas</label>
+            <input type="text" id="talla" name="talla" maxlength="100" placeholder="Playera M, pantalón 32, calzado 27">
+          </div>
+          <div class="campo">
+            <label for="colores"><span class="material-symbols-rounded">palette</span>Colores favoritos</label>
+            <input type="text" id="colores" name="colores" maxlength="200" placeholder="Verde, negro, tonos tierra">
+          </div>
+          <div class="campo completo">
+            <label for="hobbies"><span class="material-symbols-rounded">sports_esports</span>Hobbies e intereses</label>
+            <input type="text" id="hobbies" name="hobbies" maxlength="500" placeholder="Videojuegos, correr, cocinar, plantas...">
+          </div>
+          <div class="campo completo">
+            <label for="notas"><span class="material-symbols-rounded">sticky_note_2</span>Algo más que tu amigo secreto deba saber</label>
+            <textarea id="notas" name="notas" maxlength="1000" placeholder="Links de ideas, alergias, cosas que ya tienes..."></textarea>
+          </div>
+        </div>
+
+        <div class="acciones">
+          <button type="submit" class="btn btn-primario" id="btn-enviar">
+            <span class="material-symbols-rounded">send</span>Enviar mi carta
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Exito -->
+    <section class="tarjeta oculto" id="vista-exito">
+      <div class="exito">
+        <span class="material-symbols-rounded grande">mark_email_read</span>
+        <h2 id="exito-titulo">Carta recibida</h2>
+        <p class="subtitulo" id="exito-texto">Tu carta ya llego al Polo Norte. Cuando el organizador haga el sorteo te llegará un correo con tu amigo secreto.</p>
+        <div class="acciones">
+          <button class="btn btn-secundario" id="btn-editar">
+            <span class="material-symbols-rounded">edit</span>Editar mi carta
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <p class="pie">Hecho con cariño en el taller de Santa</p>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/form.js"></script>
+</body>
+</html>

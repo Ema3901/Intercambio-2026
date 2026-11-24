@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel del organizador - Intercambio Navideño</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%230f3d2e' d='M12 2 4 13h3l-3 5h6v4h4v-4h6l-3-5h3Z'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <canvas id="nieve" aria-hidden="true"></canvas>
+  <div class="luces" aria-hidden="true"></div>
+
+  <main class="contenedor">
+    <header class="encabezado">
+      <span class="material-symbols-rounded icono-grande">park</span>
+      <h1>Taller de Santa</h1>
+      <p>Panel del organizador</p>
+    </header>
+
+    <!-- Login -->
+    <section class="tarjeta" id="vista-login" style="max-width:460px;margin-left:auto;margin-right:auto;">
+      <h2><span class="material-symbols-rounded">key</span>Acceso</h2>
+      <p class="subtitulo">Solo el organizador puede entrar aquí.</p>
+      <div id="login-error" class="aviso aviso-error oculto" role="alert"></div>
+      <form id="form-login">
+        <div class="campo">
+          <label for="password"><span class="material-symbols-rounded">lock</span>Clave de administrador</label>
+          <input type="password" id="password" required autocomplete="current-password">
+        </div>
+        <div class="acciones">
+          <button type="submit" class="btn btn-verde btn-bloque" id="btn-login">
+            <span class="material-symbols-rounded">login</span>Entrar
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Panel -->
+    <div id="vista-panel" class="oculto">
+
+      <section class="tarjeta">
+        <h2><span class="material-symbols-rounded">dashboard</span>Resumen</h2>
+        <div class="estadisticas">
+          <div class="estadistica">
+            <span class="material-symbols-rounded">groups</span>
+            <div class="numero" id="stat-total">0</div>
+            <div class="etiqueta">Registrados</div>
+          </div>
+          <div class="estadistica">
+            <span class="material-symbols-rounded">forward_to_inbox</span>
+            <div class="numero" id="stat-enviados">0</div>
+            <div class="etiqueta">Correos enviados</div>
+          </div>
+          <div class="estadistica">
+            <span class="material-symbols-rounded">mail</span>
+            <div class="numero" id="stat-cuota">-</div>
+            <div class="etiqueta">Cuota diaria restante</div>
+          </div>
+        </div>
+
+        <div id="estado-sorteo"></div>
+
+        <div class="acciones">
+          <button class="btn btn-primario boton-sorteo" id="btn-sortear">
+            <span class="material-symbols-rounded">casino</span>Hacer sorteo y enviar correos
+          </button>
+          <button class="btn btn-verde oculto" id="btn-reenviar-pendientes">
+            <span class="material-symbols-rounded">send</span>Enviar correos pendientes
+          </button>
+          <button class="btn btn-secundario" id="btn-refrescar">
+            <span class="material-symbols-rounded">refresh</span>Actualizar
+          </button>
+        </div>
+      </section>
+
+      <section class="tarjeta">
+        <h2><span class="material-symbols-rounded">format_list_bulleted</span>Participantes</h2>
+        <p class="subtitulo">Solo ves los nombres. Las cartas, correos y asignaciones se mantienen en secreto, incluso para ti.</p>
+        <ul class="lista-nombres" id="lista"></ul>
+      </section>
+
+      <section class="tarjeta">
+        <h2><span class="material-symbols-rounded">tune</span>Datos del evento</h2>
+        <p class="subtitulo">Esta información aparece en la página de registro y en los correos.</p>
+        <form id="form-config">
+          <div class="grid">
+            <div class="campo completo">
+              <label for="cfg-nombre"><span class="material-symbols-rounded">celebration</span>Nombre del evento</label>
+              <input type="text" id="cfg-nombre" maxlength="200" placeholder="Intercambio Navideño 2026">
+            </div>
+            <div class="campo">
+              <label for="cfg-presupuesto"><span class="material-symbols-rounded">payments</span>Presupuesto</label>
+              <input type="text" id="cfg-presupuesto" maxlength="200" placeholder="$500 MXN">
+            </div>
+            <div class="campo">
+              <label for="cfg-fecha"><span class="material-symbols-rounded">event</span>Fecha del intercambio</label>
+              <input type="text" id="cfg-fecha" maxlength="200" placeholder="Sábado 20 de diciembre, 8:00 pm">
+            </div>
+            <div class="campo completo">
+              <label for="cfg-lugar"><span class="material-symbols-rounded">location_on</span>Lugar</label>
+              <input type="text" id="cfg-lugar" maxlength="200" placeholder="Casa de Ana">
+            </div>
+          </div>
+
+          <div class="interruptor">
+            <div class="texto">
+              <strong>Registro abierto</strong>
+              <small>Si lo apagas, nadie más podrá registrarse ni editar su carta.</small>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="cfg-abierto">
+              <span class="deslizador"></span>
+            </label>
+          </div>
+
+          <div class="acciones">
+            <button type="submit" class="btn btn-verde" id="btn-guardar">
+              <span class="material-symbols-rounded">save</span>Guardar cambios
+            </button>
+          </div>
+        </form>
+
+        <div class="zona-peligro">
+          <h3><span class="material-symbols-rounded">warning</span>Zona de peligro</h3>
+          <div class="acciones" style="justify-content:flex-start;margin-top:0">
+            <button class="btn btn-peligro btn-chico" id="btn-reiniciar">
+              <span class="material-symbols-rounded">restart_alt</span>Reiniciar sorteo
+            </button>
+            <button class="btn btn-peligro btn-chico" id="btn-borrar">
+              <span class="material-symbols-rounded">delete_forever</span>Borrar todos los participantes
+            </button>
+            <button class="btn btn-secundario btn-chico" id="btn-salir">
+              <span class="material-symbols-rounded">logout</span>Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <p class="pie">Página de registro para tus amigos: <a href="index.html" id="link-registro">index.html</a></p>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
